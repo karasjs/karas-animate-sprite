@@ -129,18 +129,15 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
       var sr = this.shadowRoot;
 
       function cb(diff) {
-        if (delay > 0) {
-          delay -= diff;
-        }
+        count += diff;
 
-        if (delay > 0) {
+        if (times === 0 && count < delay) {
           return;
         }
 
-        count += diff + delay;
-        delay = 0;
+        var time = times ? count : count - delay;
 
-        if (count >= duration) {
+        if (time >= duration) {
           times++;
 
           if (times >= iterations) {
@@ -148,21 +145,21 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
 
             if (fill !== 'forwards') {
               sr.updateStyle({
-                visibility: 'hidden'
+                backgroundPositionX: 0,
+                backgroundPositionY: 0
               });
             }
 
             return;
           }
 
-          count = 0;
+          count = time - duration;
         }
 
-        var i = Math.floor(count * total / duration);
+        var i = Math.floor(time * total / duration);
         sr.updateStyle({
           backgroundPositionX: i % nw / (nw - 1) * 100 + '%',
-          backgroundPositionY: Math.floor(i / nw) / (nh - 1) * 100 + '%',
-          visibility: 'visible'
+          backgroundPositionY: Math.floor(i / nw) / (nh - 1) * 100 + '%'
         });
       }
 
@@ -177,8 +174,7 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
         style: {
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '0 0',
-          backgroundSize: "".concat(nw * 100, "% ").concat(nh * 100, "%"),
-          visibility: 'hidden'
+          backgroundSize: "".concat(nw * 100, "% ").concat(nh * 100, "%")
         }
       });
     }
