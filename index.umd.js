@@ -105,6 +105,8 @@
     };
   }
 
+  var version = "0.1.0";
+
   var Sprite = /*#__PURE__*/function (_karas$Component) {
     _inherits(Sprite, _karas$Component);
 
@@ -188,6 +190,8 @@
 
     return Sprite;
   }(karas.Component);
+
+  Sprite.version = version;
 
   return Sprite;
 

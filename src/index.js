@@ -1,3 +1,5 @@
+import { version } from '../package.json';
+
 class Sprite extends karas.Component {
   componentDidMount() {
     let { nw, nh, delay = 0, duration = 1000, iterations = 1, fill } = this.props;
@@ -41,5 +43,7 @@ class Sprite extends karas.Component {
     }}/>;
   }
 }
+
+Sprite.version = version;
 
 export default Sprite;

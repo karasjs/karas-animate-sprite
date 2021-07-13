@@ -1,7 +1,6 @@
 {
-  "name": "karas",
+  "name": "karas-animate-sprite",
   "version": "0.1.0",
-  "description": "A flexible JavaScript framework for RIA on Canvas/Svg.",
   "maintainers": [
     {
       "name": "army8735",
@@ -23,13 +22,14 @@
     "@babel/core": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.8.7",
+    "@rollup/plugin-json": "^4.1.0",
     "babel-preset-karas": "^7.10.1",
     "rollup": "^2.52.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-sourcemaps": "^0.5.0",
     "webstorm-disable-index": "^1.2.0"
   },
-  "main": "./index",
+  "main": "./index.es.js",
   "engines": {
     "node": ">=10.0.0"
   },
