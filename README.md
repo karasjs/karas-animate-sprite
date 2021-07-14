@@ -13,7 +13,7 @@ npm install karas-animate-sprite
 ## Usage
 
 ```jsx
-import AnimateSprite from 'kakras-animate-sprite';
+import AnimateSprite from 'karas-animate-sprite';
 
 karas.render(
   <canvas width="720" height="720">
