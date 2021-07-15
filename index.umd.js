@@ -1,8 +1,12 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AnimateSprite = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('karas')) :
+  typeof define === 'function' && define.amd ? define(['karas'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AnimateSprite = factory(global.karas));
+}(this, (function (karas) { 'use strict';
+
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+  var karas__default = /*#__PURE__*/_interopDefaultLegacy(karas);
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -178,7 +182,7 @@
       value: function render() {
         var nw = this.props.nw,
             nh = this.props.nh;
-        return karas.createElement("div", {
+        return karas__default['default'].createElement("div", {
           style: {
             backgroundRepeat: 'no-repeat',
             backgroundPosition: '0 0',
@@ -189,7 +193,7 @@
     }]);
 
     return Sprite;
-  }(karas.Component);
+  }(karas__default['default'].Component);
 
   Sprite.version = version;
 

@@ -1,3 +1,4 @@
+import karas from 'karas';
 import { version } from '../package.json';
 
 class Sprite extends karas.Component {
