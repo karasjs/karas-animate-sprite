@@ -101,7 +101,7 @@ function _createSuper(Derived) {
   };
 }
 
-var version = "0.1.2";
+var version = "0.1.4";
 
 var Sprite = /*#__PURE__*/function (_karas$Component) {
   _inherits(Sprite, _karas$Component);
