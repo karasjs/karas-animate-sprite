@@ -5,7 +5,7 @@ export default [{
   input: 'src/index.js',
   output: {
     name: 'AnimateSprite',
-    file: 'index.es.js',
+    file: 'index.mjs',
     format: 'es',
     sourcemap: true,
   },
@@ -20,7 +20,7 @@ export default [{
   input: 'src/index.js',
   output: {
     name: 'AnimateSprite',
-    file: 'index.umd.js',
+    file: 'index.js',
     format: 'umd',
     sourcemap: true,
   },
