@@ -18,7 +18,7 @@
   "peerDependencies": {
   },
   "dependencies": {
-    "karas": "~0.59.11"
+    "karas": "~0.59.12"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
