@@ -1,6 +1,6 @@
 {
   "name": "karas-animate-sprite",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "maintainers": [
     {
       "name": "army8735",
@@ -16,9 +16,9 @@
     "url": "git://github.com/karasjs/karas-animate-sprite.git"
   },
   "peerDependencies": {
+    "karas": "~0.59.15"
   },
   "dependencies": {
-    "karas": "~0.59.13"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",

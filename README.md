@@ -7,6 +7,7 @@ karas帧动画组件。
 
 ## Install
 ```
+npm install karas
 npm install karas-animate-sprite
 ```
 
