@@ -28,7 +28,7 @@ karas.render(
                    delay={1000} // 延迟时间播放
                    duration={2000} // 时长
                    iterations={2} // 循环次数
-                   fill={'forwarads'} // 停留模式，同css动画规范fill，forwards尾帧
+                   fill={'forwarads'} // 停留模式，同css动画规范fill，forwards尾帧/backwards首帧/both首尾帧
     />
   </canvas>
 );

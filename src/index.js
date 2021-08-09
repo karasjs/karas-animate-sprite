@@ -9,6 +9,13 @@ class Sprite extends karas.Component {
     function cb(diff) {
       count += diff;
       if(times === 0 && count < delay) {
+        if(['backwards', 'both'].indexOf(fill) > -1) {
+          sr.updateStyle({
+            visibility: 'inherit',
+            backgroundPositionX: 0,
+            backgroundPositionY: 0,
+          });
+        }
         return;
       }
       let time = times ? count : (count - delay);
@@ -16,18 +23,19 @@ class Sprite extends karas.Component {
         times++;
         if(times >= iterations) {
           sr.removeFrameAnimate(cb);
-          if(fill !== 'forwards') {
-            sr.updateStyle({
-              backgroundPositionX: 0,
-              backgroundPositionY: 0,
-            });
-          }
+          let visibility = ['forwards', 'both'].indexOf(fill) > -1 ? 'visible' : 'hidden';
+          sr.updateStyle({
+            visibility,
+            backgroundPositionX: 0,
+            backgroundPositionY: 0,
+          });
           return;
         }
         count = time - duration;
       }
       let i = Math.floor(time * total / duration);
       sr.updateStyle({
+        visibility: 'inherit',
         backgroundPositionX: i % nw / (nw - 1) * 100 + '%',
         backgroundPositionY: Math.floor(i / nw) / (nh - 1) * 100 + '%',
       });
@@ -38,6 +46,7 @@ class Sprite extends karas.Component {
   render() {
     let nw = this.props.nw, nh = this.props.nh;
     return <div style={{
+      visibility: 'hidden',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: '0 0',
       backgroundSize: `${nw * 100}% ${nh * 100}%`,

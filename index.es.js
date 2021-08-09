@@ -101,7 +101,7 @@ function _createSuper(Derived) {
   };
 }
 
-var version = "0.1.8";
+var version = "0.2.0";
 
 var Sprite = /*#__PURE__*/function (_karas$Component) {
   _inherits(Sprite, _karas$Component);
@@ -136,6 +136,14 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
         count += diff;
 
         if (times === 0 && count < delay) {
+          if (['backwards', 'both'].indexOf(fill) > -1) {
+            sr.updateStyle({
+              visibility: 'inherit',
+              backgroundPositionX: 0,
+              backgroundPositionY: 0
+            });
+          }
+
           return;
         }
 
@@ -146,14 +154,12 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
 
           if (times >= iterations) {
             sr.removeFrameAnimate(cb);
-
-            if (fill !== 'forwards') {
-              sr.updateStyle({
-                backgroundPositionX: 0,
-                backgroundPositionY: 0
-              });
-            }
-
+            var visibility = ['forwards', 'both'].indexOf(fill) > -1 ? 'visible' : 'hidden';
+            sr.updateStyle({
+              visibility: visibility,
+              backgroundPositionX: 0,
+              backgroundPositionY: 0
+            });
             return;
           }
 
@@ -162,6 +168,7 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
 
         var i = Math.floor(time * total / duration);
         sr.updateStyle({
+          visibility: 'inherit',
           backgroundPositionX: i % nw / (nw - 1) * 100 + '%',
           backgroundPositionY: Math.floor(i / nw) / (nh - 1) * 100 + '%'
         });
@@ -176,6 +183,7 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
           nh = this.props.nh;
       return karas.createElement("div", {
         style: {
+          visibility: 'hidden',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: '0 0',
           backgroundSize: "".concat(nw * 100, "% ").concat(nh * 100, "%")
