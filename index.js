@@ -109,22 +109,29 @@
     };
   }
 
-  var version = "0.2.0";
+  var version = "0.3.0";
 
   var Sprite = /*#__PURE__*/function (_karas$Component) {
     _inherits(Sprite, _karas$Component);
 
     var _super = _createSuper(Sprite);
 
-    function Sprite() {
+    function Sprite(props) {
+      var _this;
+
       _classCallCheck(this, Sprite);
 
-      return _super.apply(this, arguments);
+      _this = _super.call(this, props);
+      _this.count = 0;
+      _this.times = 0;
+      return _this;
     }
 
     _createClass(Sprite, [{
       key: "componentDidMount",
       value: function componentDidMount() {
+        var _this2 = this;
+
         var _this$props = this.props,
             nw = _this$props.nw,
             nh = _this$props.nh,
@@ -134,66 +141,74 @@
             duration = _this$props$duration === void 0 ? 1000 : _this$props$duration,
             _this$props$iteration = _this$props.iterations,
             iterations = _this$props$iteration === void 0 ? 1 : _this$props$iteration,
-            fill = _this$props.fill;
-        var total = nw * nh,
-            count = 0,
-            times = 0;
+            fill = _this$props.fill,
+            autoPlay = _this$props.autoPlay;
+        var total = nw * nh;
         var sr = this.shadowRoot;
 
-        function cb(diff) {
-          count += diff;
+        var cb = this.cb = function (diff) {
+          _this2.count += diff;
 
-          if (times === 0 && count < delay) {
-            if (['backwards', 'both'].indexOf(fill) > -1) {
-              sr.updateStyle({
-                visibility: 'inherit',
-                backgroundPositionX: 0,
-                backgroundPositionY: 0
-              });
-            }
-
+          if (_this2.times === 0 && _this2.count < delay) {
             return;
           }
 
-          var time = times ? count : count - delay;
+          var time = _this2.times ? _this2.count : _this2.count - delay;
 
           if (time >= duration) {
-            times++;
+            _this2.times++;
 
-            if (times >= iterations) {
+            if (_this2.times >= iterations) {
               sr.removeFrameAnimate(cb);
-              var visibility = ['forwards', 'both'].indexOf(fill) > -1 ? 'visible' : 'hidden';
+              var backgroundPosition = ['forwards', 'both'].indexOf(fill) > -1 ? '100% 100%' : '1000% 1000%';
               sr.updateStyle({
-                visibility: visibility,
-                backgroundPositionX: 0,
-                backgroundPositionY: 0
+                backgroundPosition: backgroundPosition
               });
               return;
             }
 
-            count = time - duration;
+            _this2.count = time - duration;
           }
 
           var i = Math.floor(time * total / duration);
           sr.updateStyle({
-            visibility: 'inherit',
             backgroundPositionX: i % nw / (nw - 1) * 100 + '%',
             backgroundPositionY: Math.floor(i / nw) / (nh - 1) * 100 + '%'
           });
-        }
+        };
 
-        sr.frameAnimate(cb);
+        if (autoPlay !== false) {
+          sr.frameAnimate(cb);
+        }
+      }
+    }, {
+      key: "play",
+      value: function play() {
+        this.count = 0;
+        this.times = 0;
+        this.resume();
+      }
+    }, {
+      key: "pause",
+      value: function pause() {
+        this.shadowRoot.removeFrameAnimate(this.cb);
+      }
+    }, {
+      key: "resume",
+      value: function resume() {
+        this.shadowRoot.frameAnimate(this.cb);
       }
     }, {
       key: "render",
       value: function render() {
         var nw = this.props.nw,
-            nh = this.props.nh;
+            nh = this.props.nh,
+            fill = this.props.fill;
+        var backgroundPosition = ['backwards', 'both'].indexOf(fill) > -1 ? '0 0' : '1000% 1000%';
         return karas__default['default'].createElement("div", {
           style: {
-            visibility: 'hidden',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: '0 0',
+            backgroundPosition: backgroundPosition,
             backgroundSize: "".concat(nw * 100, "% ").concat(nh * 100, "%")
           }
         });

@@ -34,5 +34,11 @@ karas.render(
 );
 ```
 
+### method
+
+* pause() 暂停
+* resume() 恢复
+* play() 重新播放
+
 # License
 [MIT License]

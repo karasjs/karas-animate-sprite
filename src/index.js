@@ -2,53 +2,65 @@ import karas from 'karas';
 import { version } from '../package.json';
 
 class Sprite extends karas.Component {
+  constructor(props) {
+    super(props);
+    this.count = 0;
+    this.times = 0;
+  }
+
   componentDidMount() {
-    let { nw, nh, delay = 0, duration = 1000, iterations = 1, fill } = this.props;
-    let total = nw * nh, count = 0, times = 0;
+    let { nw, nh, delay = 0, duration = 1000, iterations = 1, fill, autoPlay } = this.props;
+    let total = nw * nh;
     let sr = this.shadowRoot;
-    function cb(diff) {
-      count += diff;
-      if(times === 0 && count < delay) {
-        if(['backwards', 'both'].indexOf(fill) > -1) {
-          sr.updateStyle({
-            visibility: 'inherit',
-            backgroundPositionX: 0,
-            backgroundPositionY: 0,
-          });
-        }
+    let cb = this.cb = diff => {
+      this.count += diff;
+      if(this.times === 0 && this.count < delay) {
         return;
       }
-      let time = times ? count : (count - delay);
+      let time = this.times ? this.count : (this.count - delay);
       if(time >= duration) {
-        times++;
-        if(times >= iterations) {
+        this.times++;
+        if(this.times >= iterations) {
           sr.removeFrameAnimate(cb);
-          let visibility = ['forwards', 'both'].indexOf(fill) > -1 ? 'visible' : 'hidden';
+          let backgroundPosition = ['forwards', 'both'].indexOf(fill) > -1 ? '100% 100%' : '1000% 1000%';
           sr.updateStyle({
-            visibility,
-            backgroundPositionX: 0,
-            backgroundPositionY: 0,
+            backgroundPosition,
           });
           return;
         }
-        count = time - duration;
+        this.count = time - duration;
       }
       let i = Math.floor(time * total / duration);
       sr.updateStyle({
-        visibility: 'inherit',
         backgroundPositionX: i % nw / (nw - 1) * 100 + '%',
         backgroundPositionY: Math.floor(i / nw) / (nh - 1) * 100 + '%',
       });
+    };
+    if(autoPlay !== false) {
+      sr.frameAnimate(cb);
     }
-    sr.frameAnimate(cb);
+  }
+
+  play() {
+    this.count = 0;
+    this.times = 0;
+    this.resume();
+  }
+
+  pause() {
+    this.shadowRoot.removeFrameAnimate(this.cb);
+  }
+
+  resume() {
+    this.shadowRoot.frameAnimate(this.cb);
   }
 
   render() {
-    let nw = this.props.nw, nh = this.props.nh;
+    let nw = this.props.nw, nh = this.props.nh, fill = this.props.fill;
+    let backgroundPosition = ['backwards', 'both'].indexOf(fill) > -1 ? '0 0' : '1000% 1000%';
     return <div style={{
-      visibility: 'hidden',
       backgroundRepeat: 'no-repeat',
-      backgroundPosition: '0 0',
+      backgroundPosition,
       backgroundSize: `${nw * 100}% ${nh * 100}%`,
     }}/>;
   }
