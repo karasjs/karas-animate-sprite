@@ -101,7 +101,7 @@ function _createSuper(Derived) {
   };
 }
 
-var version = "0.3.0";
+var version = "0.3.1";
 
 var Sprite = /*#__PURE__*/function (_karas$Component) {
   _inherits(Sprite, _karas$Component);
@@ -116,6 +116,7 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
     _this = _super.call(this, props);
     _this.count = 0;
     _this.times = 0;
+    _this.playbackRate = props.playbackRate || 1;
     return _this;
   }
 
@@ -139,7 +140,7 @@ var Sprite = /*#__PURE__*/function (_karas$Component) {
       var sr = this.shadowRoot;
 
       var cb = this.cb = function (diff) {
-        _this2.count += diff;
+        _this2.count += diff * _this2.playbackRate;
 
         if (_this2.times === 0 && _this2.count < delay) {
           return;

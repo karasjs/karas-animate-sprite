@@ -6,6 +6,7 @@ class Sprite extends karas.Component {
     super(props);
     this.count = 0;
     this.times = 0;
+    this.playbackRate = props.playbackRate || 1;
   }
 
   componentDidMount() {
@@ -13,7 +14,7 @@ class Sprite extends karas.Component {
     let total = nw * nh;
     let sr = this.shadowRoot;
     let cb = this.cb = diff => {
-      this.count += diff;
+      this.count += diff * this.playbackRate;
       if(this.times === 0 && this.count < delay) {
         return;
       }
